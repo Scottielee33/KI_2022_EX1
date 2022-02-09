@@ -1,0 +1,1 @@
+# Kunstmatige Intelligentie Opdracht 1 Schaken
