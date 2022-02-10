@@ -538,12 +538,26 @@ int Chess::playthegame (int maxgamelength, bool print,
 // do one pure Monte Carlo (MC) move for white
 // playouts random games (of maxgamelength) per candidate move
 void Chess::MCwhitemove (int maxgamelength, int playouts) {
-  // TODO
+  // TODO 
+  //curr -> childnodes ->
+
+  for(int i=0; i<numberofwhitemoves();i++){
+    Chess copy = *this;
+    copy.dowhitemove(i);
+    for(int j=0; j<playouts;j++){
+      for(int k=0; k<maxgamelength;k++){
+        Chess cc = copy;
+        cc.doblackkingmove(j);
+        cc.randomwhitemove();
+      }
+    }
+  }
 }//Chess::MCwhitemove
 
 // do one clever move for white
 void Chess::cleverwhitemove ( ) {
   // TODO
+
   dowhitemove (0); // not so clever ...
 }//Chess::cleverwhitemove
 
