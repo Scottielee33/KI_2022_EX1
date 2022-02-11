@@ -538,45 +538,26 @@ int Chess::playthegame (int maxgamelength, bool print,
 // do one pure Monte Carlo (MC) move for white
 // playouts random games (of maxgamelength) per candidate move
 void Chess::MCwhitemove (int maxgamelength, int playouts) {
-  // TODO 
-  //curr -> childnodes ->
   int best_move = 0;
-  int amount_of_wins = 0;
+  int amount_of_wins_best_move = 0;
 
   for (int i=0; i < numberofwhitemoves(); i++) {
-    int temp_win = 0;
-    Chess copy = *this;
+    int temp_wins = 0; //count wins for current move
+    Chess copy = *this; //copies board
     
     copy.dowhitemove(i);
     
-    for(int j=0; j<playouts;j++) {
-      Chess cc = copy;
-      int move = 3;
-      while(cc.countmoves < maxgamelength && move==3) {
-        if (cc.whoistomove) {
-          cc.randomwhitemove();
-        }
-        else {
-          move = cc.blackmove(0);
-        }
+    for (int j=0; j < playouts; j++) {
+      Chess cc = copy; //makes a copy of the copy
+      int nrmoves;
+      int result = cc.playthegame(maxgamelength, false, nrmoves, 0, 0);
+      if (result == 0) {
+        temp_wins++;
       };
-      if (cc.countmoves == maxgamelength ) {
-        if (cc.queencaptured ) {
-        move = 2;
-        }//if
-      else if (cc.numberofblackmoves ( ) == 0 ) {
-        if (cc.incheck (cc.xBK,cc.yBK) )
-          move = 0;
-        else
-          move = 1;
-        };
-      if (move==0)
-        temp_win++;
-      };
-    };
-    if (temp_win > amount_of_wins){
-      amount_of_wins = temp_win;
-      best_move = i;
+      if (temp_wins > amount_of_wins_best_move) {
+        amount_of_wins_best_move = temp_wins;
+        best_move = i;
+      };  
     };
   };
   dowhitemove(best_move);
