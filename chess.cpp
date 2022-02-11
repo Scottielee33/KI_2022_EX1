@@ -100,7 +100,7 @@ void Chess::reset (int somesize, bool qor) {
   do {
     xWQ = rand ( ) % thesize + 1;
     yWQ = rand ( ) % thesize + 1;
-  } while ( ( xWQ == xWK && yWQ == yWK ) || ( xWQ == xWK && yWQ == yWK )
+  } while ( ( xWQ == xWK && yWQ == yWK ) || ( xWQ == xBK && yWQ == yBK )
             || incheck (xBK,yBK) || numberofblackmoves ( ) == 0 || xWQ == xBK && yWQ == yBK);
   queencaptured = false;
   whoistomove = true;
@@ -549,7 +549,7 @@ void Chess::MCwhitemove (int maxgamelength, int playouts) {
     
     for (int j=0; j < playouts; j++) {
       Chess cc = copy; //makes a copy of the copy
-      int nrmoves;
+      int nrmoves = 1;
       int result = cc.playthegame(maxgamelength, false, nrmoves, 0, 0);
       if (result == 0) {
         temp_wins++;
