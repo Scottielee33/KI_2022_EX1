@@ -554,10 +554,16 @@ void Chess::MCwhitemove (int maxgamelength, int playouts) {
       if (result == 0) {
         temp_wins++;
       };
-      if (temp_wins > amount_of_wins_best_move) {
+    };
+    if (temp_wins > amount_of_wins_best_move) {
+      amount_of_wins_best_move = temp_wins;
+      best_move = i;
+    } else if (temp_wins == amount_of_wins_best_move) {
+      int boolean = rand() % 2;
+      if (boolean == 1) {
         amount_of_wins_best_move = temp_wins;
         best_move = i;
-      };  
+      };
     };
   };
   dowhitemove(best_move);
