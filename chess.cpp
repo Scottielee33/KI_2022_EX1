@@ -571,8 +571,11 @@ int Chess::evaluate(){
   if (checkmate()){
     return 1000;
   }
+  else if(incheck(xBK, yBK)){
+    return 500;
+  }
   else{
-    return 0;
+    return numberofwhitemoves();
   }
 
 
@@ -581,14 +584,15 @@ int Chess::evaluate(){
 // do one clever move for white
 void Chess::cleverwhitemove ( ) {
   // TODO
-  int move = 0;
-  int highest_score = 0;
+  int move = 0;//clever move
+  int highest_score = 0;//highest move value
+
   for(int i = 0; i< numberofwhitemoves();i++){
 
     Chess copy = *this;
     copy.dowhitemove(i);
     
-    int score = copy.evaluate();
+    int score = copy.evaluate(); //evaluate the move
 
     if (score > highest_score){
       highest_score = score;
