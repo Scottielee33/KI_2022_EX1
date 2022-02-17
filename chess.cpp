@@ -65,6 +65,7 @@ class Chess {
     //=============================================================
     void MCwhitemove (int maxgamelength, int playouts);
     void cleverwhitemove ( );
+    int evaluate();
 };//Chess
 
 //=================================================================
@@ -564,11 +565,40 @@ void Chess::MCwhitemove (int maxgamelength, int playouts) {
   dowhitemove(best_move);
 };//Chess::MCwhitemove
 
+int Chess::evaluate(){
+  //gewonnen -> 1000 punten
+
+  if (checkmate()){
+    return 1000;
+  }
+  else{
+    return 0;
+  }
+
+
+}//Chess::evaluate function
+
 // do one clever move for white
 void Chess::cleverwhitemove ( ) {
   // TODO
+  int move = 0;
+  int highest_score = 0;
+  for(int i = 0; i< numberofwhitemoves();i++){
 
-  dowhitemove (0); // not so clever ...
+    Chess copy = *this;
+    copy.dowhitemove(i);
+    
+    int score = copy.evaluate();
+
+    if (score > highest_score){
+      highest_score = score;
+      move = i;
+    }
+
+
+  }
+
+  dowhitemove (move); // not so clever ...
 }//Chess::cleverwhitemove
 
 // main program
