@@ -571,11 +571,11 @@ int Chess::evaluate(){
   if (checkmate()){
     return 1000;
   }
-  else if(incheck(xBK, yBK)){
-    return 500;
+  else if(numberofblackmoves() == 0 && !checkmate()){
+    return -1000;
   }
   else{
-    return numberofwhitemoves();
+    return ((yBK - yWK + xBK - xWK) / 2) + numberofwhitemoves();
   }
 
 
