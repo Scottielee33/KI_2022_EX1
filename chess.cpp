@@ -539,7 +539,7 @@ int Chess::playthegame (int maxgamelength, bool print,
 // playouts random games (of maxgamelength) per candidate move
 void Chess::MCwhitemove (int maxgamelength, int playouts) {
   int best_move = 0;
-  int amount_of_wins_best_move = 0;
+  int amount_of_wins_best_move = -1000;
 
   for (int i=0; i < numberofwhitemoves(); i++) {
     int temp_wins = 0; //count wins for current move
@@ -552,18 +552,13 @@ void Chess::MCwhitemove (int maxgamelength, int playouts) {
       int nrmoves = 1;
       int result = cc.playthegame(maxgamelength, false, nrmoves, 0, 0);
       if (result == 0) {
-        temp_wins++;
-      };
+        temp_wins+= (10 * (1/nrmoves));
+      } else if (result == 1 || result == 2)
+        temp_wins -= 1;
     };
     if (temp_wins > amount_of_wins_best_move) {
       amount_of_wins_best_move = temp_wins;
       best_move = i;
-    } else if (temp_wins == amount_of_wins_best_move) {
-      int boolean = rand() % 2;
-      if (boolean == 1) {
-        amount_of_wins_best_move = temp_wins;
-        best_move = i;
-      };
     };
   };
   dowhitemove(best_move);
