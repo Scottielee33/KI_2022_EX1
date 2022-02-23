@@ -571,6 +571,7 @@ int Chess::evaluate(){
   //staat koning aan de rand?
   //hoe dicht staat witte stukken bij elkaar?
   //hoe dicht staan witte en zwarte stukken bij elkaar?
+  //positie koningin midden?
   
 
   if (checkmate()){
