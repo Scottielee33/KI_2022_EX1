@@ -567,6 +567,11 @@ void Chess::MCwhitemove (int maxgamelength, int playouts) {
 
 int Chess::evaluate(){
   //gewonnen -> 1000 punten
+  //mogelijke zetten zwarte koning
+  //staat koning aan de rand?
+  //hoe dicht staat witte stukken bij elkaar?
+  //hoe dicht staan witte en zwarte stukken bij elkaar?
+  
 
   if (checkmate()){
     return 1000;
