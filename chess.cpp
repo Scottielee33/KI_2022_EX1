@@ -570,7 +570,7 @@ int Chess::evaluate(){
 
   if (checkmate()){
     return 1000;
-  }
+  }//white wins
   else if(numberofblackmoves() == 0 && !checkmate()){
     return -1000;
   }
