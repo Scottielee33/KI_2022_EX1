@@ -572,18 +572,26 @@ int Chess::evaluate(){
   //hoe dicht staat witte stukken bij elkaar?
   //hoe dicht staan witte en zwarte stukken bij elkaar?
   //positie koningin midden?
-  
+  int score = 0;
 
   if (checkmate()){
-    return 1000;
-  }//white wins
-  else if(numberofblackmoves() == 0 && !checkmate()){
-    return -1000;
-  }
-  else{
-    return ((yBK - yWK + xBK - xWK) / 2) + numberofwhitemoves();
+    score += 10000; //white wins
   }
 
+  if(numberofblackmoves() == 0 && !checkmate()){
+    score -= 10000; //stalemate
+  }
+
+  if(xBK - xWQ == 1 || xBK - xWQ == -1 || yBK - yWQ == 1 || yBK - yWQ == -1){
+    score -= 10000; //draw
+  }
+  // if (numberofblackmoves() != 0) {
+  //   score -= numberofblackmoves();
+  // }
+  //amount of black moves
+  score += ((xBK - xWK) + (yBK - yWK)); //distance black king white king
+  //score += ((xWK - xWK) + (yWK - yWK)); //distance white king black king
+  return score;
 
 }//Chess::evaluate function
 
@@ -592,8 +600,9 @@ void Chess::cleverwhitemove ( ) {
   // TODO
   int move = 0;//clever move
   int highest_score = 0;//highest move value
+  int amount_moves = numberofwhitemoves();
 
-  for(int i = 0; i< numberofwhitemoves();i++){
+  for(int i = 0; i< amount_moves;i++){
 
     Chess copy = *this;
     copy.dowhitemove(i);
@@ -604,8 +613,6 @@ void Chess::cleverwhitemove ( ) {
       highest_score = score;
       move = i;
     }
-
-
   }
 
   dowhitemove (move); // not so clever ...
