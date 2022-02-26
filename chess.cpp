@@ -523,7 +523,7 @@ int Chess::playthegame (int maxgamelength, bool print,
     if ( queencaptured ) {
       themove = 2;
     }//if
-    else if ( numberofblackmoves ( ) == 0 ) {
+    else if ( !whoistomove && numberofblackmoves ( ) == 0 ) {
       if ( incheck (xBK,yBK) )
         themove = 0;
       else
@@ -572,27 +572,51 @@ int Chess::evaluate(){
   //hoe dicht staat witte stukken bij elkaar?
   //hoe dicht staan witte en zwarte stukken bij elkaar?
   //positie koningin midden?
-  int score = 0;
+  int score = thesize * thesize * 2;
 
   if (checkmate()){
-    score += 10000; //white wins
+    return 10000; //white wins
   }
 
-  if(numberofblackmoves() == 0 && !checkmate()){
-    score -= 10000; //stalemate
+  if (numberofblackmoves() == 0){
+    if (incheck(xBK, yBK) == false) {
+      return -10000; //stalemate
+    }
   }
 
-  if(xBK - xWQ == 1 || xBK - xWQ == -1 || yBK - yWQ == 1 || yBK - yWQ == -1){
-    score -= 10000; //draw
+  if ((xWQ - xBK <= 1 && xWQ - xBK >= -1) && (yWQ - yBK <= 1 && yWQ - yBK >= -1)){
+    if (((xWQ - xWK <= 1 && xWQ - xWK >= -1) && (yWQ - yWK <= 1 && yWQ - yWK >= -1))== false) {
+      return -10000; //draw
+    }
   }
-  // if (numberofblackmoves() != 0) {
-  //   score -= numberofblackmoves();
-  // }
-  //amount of black moves
-  score += ((xBK - xWK) + (yBK - yWK)); //distance black king white king
-  //score += ((xWK - xWK) + (yWK - yWK)); //distance white king black king
+
+  if ((xWK - xWQ) > 0) {
+    score -= (xWK - xWQ);
+  } else {
+    score -= (xWQ - xWK);
+  }
+
+  if ((yWK - yWQ) > 0) {
+    score -= (yWK - yWQ);
+  } else {
+    score -= (yWQ - yWK);
+  }
+
+  if ((xBK - xWK) > 0) {
+    score -= (xBK - xWK);
+  } else {
+    score -= (xWK - xBK);
+  }
+  
+  if ((yBK - yWK) > 0) {
+    score -= (yBK - yWK);
+  } else {
+    score -= (yWK - yBK);
+  }
+
+  score -= numberofblackmoves();
+
   return score;
-
 }//Chess::evaluate function
 
 // do one clever move for white
@@ -600,9 +624,8 @@ void Chess::cleverwhitemove ( ) {
   // TODO
   int move = 0;//clever move
   int highest_score = 0;//highest move value
-  int amount_moves = numberofwhitemoves();
 
-  for(int i = 0; i< amount_moves;i++){
+  for(int i = 0 ; i < numberofwhitemoves() ; i++){
 
     Chess copy = *this;
     copy.dowhitemove(i);
