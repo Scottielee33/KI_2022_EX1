@@ -572,7 +572,7 @@ int Chess::evaluate(){
   //hoe dicht staat witte stukken bij elkaar?
   //hoe dicht staan witte en zwarte stukken bij elkaar?
   //positie koningin midden?
-  int score = thesize * thesize * 2;
+  float score = thesize * thesize * 4;
 
   if (checkmate()){
     return 10000; //white wins
@@ -591,27 +591,27 @@ int Chess::evaluate(){
   }
 
   if ((xWK - xWQ) > 0) {
-    score -= (xWK - xWQ);
+    score -= (2 * (xWK - xWQ));
   } else {
-    score -= (xWQ - xWK);
+    score -= (2 * (xWQ - xWK));
   }
 
   if ((yWK - yWQ) > 0) {
-    score -= (yWK - yWQ);
+    score -= (2 * (yWK - yWQ));
   } else {
-    score -= (yWQ - yWK);
+    score -= (2 * (yWQ - yWK));
   }
 
   if ((xBK - xWK) > 0) {
-    score -= (xBK - xWK);
+    score -= (3 * (xBK - xWK));
   } else {
-    score -= (xWK - xBK);
+    score -= (3 * (xWK - xBK));
   }
   
   if ((yBK - yWK) > 0) {
-    score -= (yBK - yWK);
+    score -= (3 * (yBK - yWK));
   } else {
-    score -= (yWK - yBK);
+    score -= (3 * (yWK - yBK));
   }
 
   score -= numberofblackmoves();
