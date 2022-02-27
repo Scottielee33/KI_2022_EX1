@@ -553,7 +553,7 @@ void Chess::MCwhitemove (int maxgamelength, int playouts) {
       int nrmoves = 1;
       int result = cc.playthegame(maxgamelength, false, nrmoves, 0, 0);
       if (result == 0) {
-        temp_score += (10 * (1/nrmoves));
+        temp_score += 1;
       } else if (result == 1 || result == 2)
         temp_score -= 1;
     };
@@ -566,12 +566,6 @@ void Chess::MCwhitemove (int maxgamelength, int playouts) {
 };//Chess::MCwhitemove
 
 int Chess::evaluate(){
-  //gewonnen -> 1000 punten
-  //mogelijke zetten zwarte koning
-  //staat koning aan de rand?
-  //hoe dicht staat witte stukken bij elkaar?
-  //hoe dicht staan witte en zwarte stukken bij elkaar?
-  //positie koningin midden?
   float score = thesize * thesize * 4;
 
   if (checkmate()){
