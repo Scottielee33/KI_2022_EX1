@@ -576,45 +576,43 @@ int Chess::evaluate(){
 
   if (checkmate()){
     return 10000; //white wins
-  }
+  } // white wins with checkmate
 
-  if (numberofblackmoves() == 0){
-    if (incheck(xBK, yBK) == false) {
-      return -10000; //stalemate
-    }
-  }
+  if (numberofblackmoves() == 0 && incheck(xBK, yBK) == false){
+    return -10000;
+  } // tie with stalemate
 
   if ((xWQ - xBK <= 1 && xWQ - xBK >= -1) && (yWQ - yBK <= 1 && yWQ - yBK >= -1)){
     if (((xWQ - xWK <= 1 && xWQ - xWK >= -1) && (yWQ - yWK <= 1 && yWQ - yWK >= -1))== false) {
-      return -10000; //draw
-    }
-  }
+      return -10000; //
+    } // checks if the white queen defends the white king and the other way around
+  } // simple tie
+
+  score -= numberofblackmoves(); // substracts amount of blackmoves from score
 
   if ((xWK - xWQ) > 0) {
     score -= (2 * (xWK - xWQ));
   } else {
     score -= (2 * (xWQ - xWK));
-  }
+  } // x distance between white king and white queen
 
   if ((yWK - yWQ) > 0) {
     score -= (2 * (yWK - yWQ));
   } else {
     score -= (2 * (yWQ - yWK));
-  }
+  } // y distance between white king and white queen
 
   if ((xBK - xWK) > 0) {
     score -= (3 * (xBK - xWK));
   } else {
     score -= (3 * (xWK - xBK));
-  }
+  } // x distance between black king and white king
   
   if ((yBK - yWK) > 0) {
     score -= (3 * (yBK - yWK));
   } else {
     score -= (3 * (yWK - yBK));
-  }
-
-  score -= numberofblackmoves();
+  } // x distance between black king and white king
 
   return score;
 }//Chess::evaluate function
