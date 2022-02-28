@@ -551,7 +551,7 @@ void Chess::MCwhitemove (int maxgamelength, int playouts) {
     for (int j=0; j < playouts; j++) {
       Chess cc = copy; //makes a copy of the copy
       int nrmoves = 1;
-      int result = cc.playthegame(maxgamelength, false, nrmoves, 0, 0);
+      int result = cc.playthegame(maxgamelength, false, nrmoves, 0, 2);
       if (result == 0) {
         temp_score += 1;
       } else if (result == 1 || result == 2)
