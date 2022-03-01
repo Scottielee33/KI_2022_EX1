@@ -630,7 +630,7 @@ void Chess::cleverwhitemove ( ) {
     }
   }
 
-  dowhitemove (move); // not so clever ...
+  dowhitemove (move);
 }//Chess::cleverwhitemove
 
 // main program
