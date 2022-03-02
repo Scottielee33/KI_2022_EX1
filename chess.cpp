@@ -17,6 +17,7 @@
 // Walter Kosters, January 3, 2022; w.a.kosters@liacs.leidenuniv.nl
 //          February 8, 2022: small bug fix, line 521-531
 //
+//Gemaakt door: Scottie Lee(s2828596), Pi Molling(s2847116)
 
 #include <iostream>
 #include <cstdlib>
