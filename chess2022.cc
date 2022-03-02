@@ -103,7 +103,7 @@ void Chess::reset (int somesize, bool qor) {
     xWQ = rand ( ) % thesize + 1;
     yWQ = rand ( ) % thesize + 1;
   } while ( ( xWQ == xWK && yWQ == yWK ) || ( xWQ == xBK && yWQ == yBK )
-            || incheck (xBK,yBK) || numberofblackmoves ( ) == 0 || xWQ == xBK && yWQ == yBK);
+            || incheck (xBK,yBK) || numberofblackmoves ( ) == 0 || (xWQ == xBK && yWQ == yBK));
   queencaptured = false;
   whoistomove = true;
   countmoves = 0;
